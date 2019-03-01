@@ -1,21 +1,44 @@
 <!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
-  <h1>
-    Welcome to {{ title }}!
-  </h1>
-  <img width="300" alt="Angular Logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
-</div>
-<h2>Here are some links to help you start: </h2>
-<ul>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/tutorial">Tour of Heroes</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/cli">CLI Documentation</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://blog.angular.io/">Angular blog</a></h2>
-  </li>
-</ul>
+<form class="box" novalidate [formGroup]="regform" (ngSubmit)="onSubmit()">
+  <h1>Registration</h1>
+
+   <!--ошибки поля почты-->
+   <div style="color:red" *ngIf="regform.controls['Email'].invalid " >
+    <div *ngIf="regform.get('Email').hasError('required') && regform.get('Email').touched ">
+      Email is required !
+    </div>
+    <div *ngIf="regform.get('Email').hasError('pattern') && regform.get('Email').touched ">
+      Invalid input
+    </div>
+   </div>
+  <input type="text" placeholder="Email" formControlName="Email">
+
+  <!--ошибки пароля-->
+  <div style="color:red" *ngIf="regform.controls['Password'].invalid " >
+    <div *ngIf="regform.get('Password').hasError('required') && regform.get('Password').touched ">
+      Password required
+    </div>
+    <div *ngIf="regform.get('Password').hasError('minlength') && regform.get('Password').touched ">
+        Minimum of 8 character
+      </div>
+  </div>
+  <input type="text" placeholder="password" formControlName="Password">
+
+
+  <!--поле для потверждения пароля-->
+  <div style="color:red" *ngIf="regform.controls['Password2'].invalid ">
+      <div *ngIf="regform.get('Password2').hasError('required') && regform.get('Password2').touched ">
+          Password required
+      </div>
+      <div class="error" *ngIf="regform.get('Password2').errors && regform.get('Password2').dirty && regform.get('Password').dirty">
+          Not the same password
+         </div>
+
+  </div>
+  <input type="text" placeholder="confirm_password" formControlName="Password2">
+
+  <input type="submit" [disabled]="regform.invalid" >
+ 
+</form>
 
 <router-outlet></router-outlet>
